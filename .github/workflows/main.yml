@@ -1,0 +1,22 @@
+name: Build Kia Bongo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Check Unity project
+        shell: pwsh
+        run: |
+          if (!(Test-Path "Assets")) {
+            throw "Assets folder missing"
+          }
+          if (!(Test-Path "ProjectSettings/ProjectVersion.txt")) {
+            throw "ProjectSettings/ProjectVersion.txt missing"
+          }
+          Write-Host "Project files found"
